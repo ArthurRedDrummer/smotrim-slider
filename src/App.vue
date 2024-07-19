@@ -1,30 +1,33 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <ul class="flex flex-row gap-5" v-if="persons && persons.length">
+      <li v-for="person in persons" :key="person.key">
+        <div class="flex flex-col gap-5">
+          <picture class="p-5">
+            <img class="rounded-full" :src="person.picture" :alt="person.title">
+          </picture>
+          <h2 class="flex flex-col justify-start items-center gap-3">
+            <span v-text="person.name"/>
+            <span v-text="person.surname"/>
+          </h2>
+        </div>
+      </li>
+    </ul>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script setup>
+import { onMounted } from 'vue'
+import {storeToRefs} from 'pinia'
+import { usePersonsStore } from './stores/persons'
+
+const personsStore = usePersonsStore();
+const { persons } = storeToRefs(personsStore);
+
+
+onMounted(async () => {
+  await personsStore.getBox();
+
+  console.log(persons.value);
+})
+</script>
