@@ -7,7 +7,11 @@ export default {
     './index.html',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'rf-dewi': ['RF Dewi', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 }
