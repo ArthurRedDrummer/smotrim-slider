@@ -13,10 +13,15 @@ export default {
         tablet: { max: '1024px' },
         mobile: { max: '768px' },
       },
+      colors: {
+        'light-gray': '#D9D9D9'
+      },
       fontFamily: {
         'rf-dewi': ['RF Dewi', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
       backgroundImage: {
+        'icon-close': 'url(@icons/close.svg)',
         'icon-arrow': 'url(@icons/arrow.svg)',
         'icon-loader': 'url(@icons/loader.svg)'
       },

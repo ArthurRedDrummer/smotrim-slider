@@ -7,11 +7,11 @@
         disabledClass: 'opacity-0',
       }">
         <swiper-slide v-for="person in persons" :key="person.key">
-          <div class="flex flex-col gap-3 w-full">
+          <div class="flex flex-col gap-3 w-full" @click="showPerson(person.id)">
             <div class="px-3">
-              <img class="w-full h-auto rounded-full" :src="person.picture" :alt="person.title">
+              <img class="w-full h-auto rounded-full cursor-pointer" :src="person.picture" :alt="person.title">
             </div>
-            <h2 class="flex flex-col justify-start items-center text-sm leading-4">
+            <h2 class="flex flex-col justify-start items-center text-sm leading-4 cursor-pointer">
               <span v-text="person.name" />
               <span v-text="person.surname" />
             </h2>
@@ -41,8 +41,10 @@ import { Navigation } from 'swiper/modules'
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { usePersonsStore } from '@stores/persons'
+import { usePopupStore } from '@stores/popup'
 
 const personsStore = usePersonsStore();
+const popupStore = usePopupStore();
 const { persons } = storeToRefs(personsStore);
 
 const prev = ref(null);
@@ -51,7 +53,7 @@ const next = ref(null);
 const breakpoints = {
   0: {
     slidesPerView: 2,
-    slidesPerGroup: 'auto'
+    slidesPerGroup: 1
   },
   768: {
     slidesPerView: 4,
@@ -67,21 +69,12 @@ const breakpoints = {
   }
 }
 
+async function showPerson(id) {
+  popupStore.showPopup();
+  await personsStore.getPerson(id);
+}
+
 onMounted(async () => {
     await personsStore.getBox();
 })
 </script>
-
-<style>
-.v-enter-active {
-  transition: opacity 200ms ease 400ms;
-}
-.v-leave-active {
-  transition: opacity 200ms ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>
