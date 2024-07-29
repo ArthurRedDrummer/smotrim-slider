@@ -1,11 +1,7 @@
-import { API_URL } from './common'
-
-async function request(path) {
-  let url = API_URL + path;
-  
+async function request(url) {
   return fetch(url)
     .then(res => res.json())
     .then(res => res.data);
 }
 
-export {request}
+export { request }
