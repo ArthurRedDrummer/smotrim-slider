@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import {ref, computed} from 'vue'
-import { request } from '../utils/request'
+import { ref, computed } from 'vue'
+import { getPersons, getPersonById } from '../api/persons'
 import { getPictureById } from '../utils/picture'
 
 export const usePersonsStore = defineStore('persons', () => {
@@ -32,12 +32,12 @@ export const usePersonsStore = defineStore('persons', () => {
     } : null;
   })
   async function getBox() {
-    box.value = await request('/boxes/vesti2');
+    box.value = await getPersons();
   }
 
   async function getPerson(id) {
     current.value = null;
-    current.value = await request(`/persons/${id}`);
+    current.value = await getPersonById(id);
   }
 
   return {
